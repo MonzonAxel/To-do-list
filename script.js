@@ -1,17 +1,49 @@
-const date = document.querySelector(".fecha"); //Todavia no lo use
+const fecha = document.querySelector(".fecha");
 const input = document.querySelector(".input");
 const add = document.querySelector(".fa-circle-plus");
 const ul = document.querySelector(".mainList");
-const MAX_CHARACTERS = 40;
 
+const MAX_CHARACTERS = 27;
 const check = "fa-check-circle";
 const uncheck = "fa-circle";
 const lineThrough= "line-through"
 
+let LIST = []
 let count = 0;
 
 
-// Inserta la tarea
+// Fecha y hora actual
+
+const getDateAndTime = () => {
+    const now = new Date();
+    const options = {
+        timeZone: 'America/Argentina/Buenos_Aires',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    };
+
+    return now.toLocaleString('es-AR', options);
+};
+
+
+const updateDateAndTime = () => {
+    const currentDateTime = getDateAndTime();
+    fecha.textContent = currentDateTime;
+};
+
+updateDateAndTime();
+
+setInterval(updateDateAndTime, 1000)
+
+
+
+// Insertar la tarea
+
 const addTask = (task,count,circle,trash) =>{
 
     if(trash) return
@@ -27,32 +59,51 @@ const addTask = (task,count,circle,trash) =>{
     ul.insertAdjacentHTML("beforeend",element)
 }
 
-// Obtiene la tarea
+// Obtener la tarea
+
 const setTask = () =>{
     const task = input.value
     if(!task) return alert("Debe insertar una tarea")
+
     addTask(task,count,false,false)
+    LIST.push({
+        nombre:task,
+        count:count,
+        circle:false,
+        trash:false
+    })
+    console.log(LIST)
     input.value=""
     count ++
+
 } 
 
-// Cambia estado de la clase
+// Cambiar estado de la clase
 
-const taskDone = (element) =>{
+const taskDone = (element,) =>{
+
+    const incremental = element.getAttribute("count")
+
     element.classList.toggle(uncheck)
     element.classList.toggle(check)
     element.parentNode.classList.toggle(lineThrough)
     
+    LIST[incremental].circle = LIST[incremental].circle ? false : true
+
+    
 }
 
-// Elimina el elemento
+// Eliminar el elemento seleccionado
 
 const taskDelete = (element) =>{
+    const incremental = element.getAttribute("count")
     element.parentNode.remove()
+    LIST[incremental].trash = true;
 }
 
 
 // Disparador de tareas
+
 add.addEventListener("click", setTask);
 
 document.addEventListener("keydown", (e) => {
@@ -66,6 +117,8 @@ ul.addEventListener("click",(e)=>{
     if(value === "sucess") taskDone(element)
     if(value === "delete") taskDelete(element)
 })
+
+// Restriccion en el input
 
 input.addEventListener("input", () => {
     if (input.value.length > MAX_CHARACTERS) {
