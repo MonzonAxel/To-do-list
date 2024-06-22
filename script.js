@@ -2,6 +2,7 @@ const date = document.querySelector(".fecha"); //Todavia no lo use
 const input = document.querySelector(".input");
 const add = document.querySelector(".fa-circle-plus");
 const ul = document.querySelector(".mainList");
+const MAX_CHARACTERS = 40;
 
 const check = "fa-check-circle";
 const uncheck = "fa-circle";
@@ -44,7 +45,7 @@ const taskDone = (element) =>{
     
 }
 
-// Elimina el element
+// Elimina el elemento
 
 const taskDelete = (element) =>{
     element.parentNode.remove()
@@ -66,3 +67,8 @@ ul.addEventListener("click",(e)=>{
     if(value === "delete") taskDelete(element)
 })
 
+input.addEventListener("input", () => {
+    if (input.value.length > MAX_CHARACTERS) {
+        input.value = input.value.slice(0, MAX_CHARACTERS);
+    }
+});
