@@ -30,7 +30,8 @@ body{
     background-color: white;
     border-radius: 15px;
     padding: 8px;
-    width: 350px;
+    width: 400px;
+    align-items: center;
 }
 
 .input{
@@ -54,6 +55,9 @@ body{
     
 }
 
+.allEliminate {
+    width: 150px;
+}
 
 /* List */
 
@@ -72,6 +76,7 @@ body{
 .fa-circle-plus{
     color: var(--black);
     margin-left: 9px;
+    margin-right: 9px;
     font-size: 150%;
     cursor: pointer;
 }
@@ -88,6 +93,12 @@ body{
 i:hover{
     color:rgb(60, 60, 203);
     transform: scale(1.1);
+}
+
+button:hover{
+    background-color:rgb(60, 60, 203);
+    color: white;
+    
 }
 
 /* Add in JS */

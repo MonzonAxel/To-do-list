@@ -2,6 +2,7 @@ const fecha = document.querySelector(".fecha");
 const input = document.querySelector(".input");
 const add = document.querySelector(".fa-circle-plus");
 const ul = document.querySelector(".mainList");
+const button = document.querySelector(".allEliminate")
 
 const MAX_CHARACTERS = 27;
 const check = "fa-check-circle";
@@ -128,6 +129,7 @@ input.addEventListener("input", () => {
     }
 });
 
+// Recuperar Storage 
 
 let dataLocal = localStorage.getItem("Array")
 if(dataLocal){
@@ -144,3 +146,12 @@ function addList(parameter) {
         addTask(e.nombre, e.count, e.circle, e.trash);
     });
 }
+
+
+button.addEventListener("click", () => {
+    localStorage.clear()
+    while (ul.firstChild) {
+        ul.removeChild(ul.firstChild);
+    }
+
+})
