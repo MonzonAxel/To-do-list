@@ -8,7 +8,7 @@ const check = "fa-check-circle";
 const uncheck = "fa-circle";
 const lineThrough= "line-through"
 
-let LIST = []
+let LIST 
 let count = 0;
 
 
@@ -72,7 +72,7 @@ const setTask = () =>{
         circle:false,
         trash:false
     })
-    console.log(LIST)
+    localStorage.setItem("Array",JSON.stringify(LIST))
     input.value=""
     count ++
 
@@ -116,6 +116,7 @@ ul.addEventListener("click",(e)=>{
  
     if(value === "sucess") taskDone(element)
     if(value === "delete") taskDelete(element)
+    localStorage.setItem("Array",JSON.stringify(LIST))
 })
 
 // Restriccion en el input
@@ -125,3 +126,22 @@ input.addEventListener("input", () => {
         input.value = input.value.slice(0, MAX_CHARACTERS);
     }
 });
+
+
+const addList = (array => {
+    array.forEach(e => {
+        addTask(e.nombre,e.count,e.circle,e.trash)
+    });
+})
+
+
+let dataLocal = localStorage.getItem("Array")
+if(dataLocal){
+    LIST=JSON.parse(dataLocal)
+    count = LIST.length
+    addList(LIST)
+}else{  
+    LIST = []
+    count = 0
+}
+
