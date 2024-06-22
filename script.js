@@ -116,6 +116,7 @@ ul.addEventListener("click",(e)=>{
  
     if(value === "sucess") taskDone(element)
     if(value === "delete") taskDelete(element)
+        
     localStorage.setItem("Array",JSON.stringify(LIST))
 })
 
@@ -128,13 +129,6 @@ input.addEventListener("input", () => {
 });
 
 
-const addList = (array => {
-    array.forEach(e => {
-        addTask(e.nombre,e.count,e.circle,e.trash)
-    });
-})
-
-
 let dataLocal = localStorage.getItem("Array")
 if(dataLocal){
     LIST=JSON.parse(dataLocal)
@@ -145,3 +139,8 @@ if(dataLocal){
     count = 0
 }
 
+function addList(parameter) {
+    parameter.forEach(e => {
+        addTask(e.nombre, e.count, e.circle, e.trash);
+    });
+}
