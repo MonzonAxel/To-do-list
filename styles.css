@@ -7,7 +7,7 @@
 *{
     box-sizing: border-box;
 }
-
+/* Main content  */
 
 body{
     display: flex;
@@ -24,6 +24,7 @@ body{
     max-width: 500px;
 }
 
+/* Form and input */
 .form{
     display: flex;
     background-color: white;
@@ -40,17 +41,59 @@ body{
     height: 25px;
 }
 
+.input::placeholder{
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: rgb(120, 116, 116);
+}
+
+.input:focus{
+    background-color: rgb(8, 8, 8);
+    color: white;
+    
+}
+
+
+/* List */
+
+.mainList{
+    margin-left: -40px
+}
+
+.li{
+    
+    list-style: none;
+}
+
+
+/* Icons */
+
 .fa-circle-plus{
     color: var(--black);
     margin-left: 9px;
     font-size: 150%;
     cursor: pointer;
 }
-
-.fa-circle-plus:hover{
-    color:rgb(60, 60, 203)
+.fa-circle{
+    margin-right: 8px;
 }
 
 .fa-trash{
-    margin-left: 4px
+    margin-left: 8px
+}
+
+i:hover{
+    color:rgb(60, 60, 203);
+    transform: scale(1.1);
+}
+
+/* Add in JS */
+
+.line-through{
+    text-decoration: line-through;
+}
+
+.fa-check-circle{
+    margin-right: 8px;
 }
