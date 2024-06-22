@@ -149,7 +149,12 @@ function addList(parameter) {
 
 
 button.addEventListener("click", () => {
+    if(!ul.firstChild) return
     localStorage.clear()
+
+    LIST = []
+    count = 0
+
     while (ul.firstChild) {
         ul.removeChild(ul.firstChild);
     }
