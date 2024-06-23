@@ -42,6 +42,13 @@ updateDateAndTime();
 setInterval(updateDateAndTime, 1000)
 
 
+//Restriccion en los inputs
+
+const charactersRestriction = (input) =>{
+    if (input.value.length > MAX_CHARACTERS) {
+        input.value = input.value.slice(0, MAX_CHARACTERS);
+    }
+}
 
 // Insertar la tarea
 
@@ -52,9 +59,11 @@ const addTask = (task,count,circle,trash) =>{
     let state = circle ? check : uncheck;
     let line = circle ? lineThrough : ""
 
-    const element = `<li class="li ${line}">
+    const element = `<li class="li">
                         <i class="far ${state}" data="sucess" count="${count}"></i>
-                        ${task}
+                        <span class="task-text ${line}">${task}</span>
+                        <input type="text" class="edit-input" hidden">
+                        <i class="fa-solid fa-edit" data="edit" count="${count}"></i>
                         <i class="fa-solid fa-trash" data="delete" count="${count}"></i>
                     </li>`
     ul.insertAdjacentHTML("beforeend",element)
@@ -81,13 +90,15 @@ const setTask = () =>{
 
 // Cambiar estado de la clase
 
-const taskDone = (element,) =>{
+const taskDone = (element) =>{
 
     const incremental = element.getAttribute("count")
+    const taskText = element.parentNode.querySelector(".task-text")
+    taskText.classList.toggle(lineThrough)
 
     element.classList.toggle(uncheck)
     element.classList.toggle(check)
-    element.parentNode.classList.toggle(lineThrough)
+    
     
     LIST[incremental].circle = LIST[incremental].circle ? false : true
 
@@ -102,12 +113,48 @@ const taskDelete = (element) =>{
     LIST[incremental].trash = true;
 }
 
+// Editar la tarea seleccionada
+
+const handleEditKeyPress = (e, taskText, editInput, incremental) => {
+    if (e.key === 'Enter') {
+        const newTask = editInput.value.trim()
+        if (newTask !== "") {
+            taskText.textContent = newTask
+            LIST[incremental].nombre = newTask
+            localStorage.setItem("Array", JSON.stringify(LIST))
+        }
+        taskText.classList.remove("hidden")
+        editInput.classList.remove("visible")
+        editInput.classList.add("hidden")
+    }
+}
+
+// Iniciar tarea a modificar
+
+const taskEdit = (element) => {
+    const incremental = element.getAttribute("count")
+    const taskText = element.parentNode.querySelector(".task-text")
+    const editInput = element.parentNode.querySelector(".edit-input")
+
+    taskText.classList.add("hidden")
+    editInput.classList.remove("hidden")
+    editInput.classList.add("visible")
+    editInput.value = taskText.textContent
+    editInput.focus()
+
+    const editHandler = (e) => handleEditKeyPress(e, taskText, editInput, incremental)
+
+    editInput.addEventListener("keydown", editHandler)
+
+    editInput.addEventListener("input", () => charactersRestriction(editInput))
+        
+}
 
 // Disparador de tareas
 
 add.addEventListener("click", setTask);
 
-document.addEventListener("keydown", (e) => {
+input.addEventListener("keydown", (e) => {
     if (e.key === 'Enter') setTask()
 })
 
@@ -117,17 +164,12 @@ ul.addEventListener("click",(e)=>{
  
     if(value === "sucess") taskDone(element)
     if(value === "delete") taskDelete(element)
+    if(value === "edit") taskEdit(element)
         
     localStorage.setItem("Array",JSON.stringify(LIST))
 })
 
-// Restriccion en el input
-
-input.addEventListener("input", () => {
-    if (input.value.length > MAX_CHARACTERS) {
-        input.value = input.value.slice(0, MAX_CHARACTERS);
-    }
-});
+input.addEventListener("input", () => charactersRestriction(input))
 
 // Recuperar Storage 
 
@@ -147,6 +189,7 @@ function addList(parameter) {
     });
 }
 
+// Eliminar todo 
 
 button.addEventListener("click", () => {
     if(!ul.firstChild) return
@@ -158,5 +201,5 @@ button.addEventListener("click", () => {
     while (ul.firstChild) {
         ul.removeChild(ul.firstChild);
     }
-
+    
 })

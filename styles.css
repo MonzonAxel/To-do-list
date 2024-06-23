@@ -6,6 +6,7 @@
 
 *{
     box-sizing: border-box;
+
 }
 /* Main content  */
 
@@ -30,7 +31,8 @@ body{
     background-color: white;
     border-radius: 15px;
     padding: 8px;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     align-items: center;
 }
 
@@ -40,6 +42,7 @@ body{
     border-radius: 8px;
     border: none;
     height: 25px;
+    margin-right: 8px;
 }
 
 .input::placeholder{
@@ -62,33 +65,77 @@ body{
 /* List */
 
 .mainList{
-    margin-left: -40px
+    list-style:none;
+    padding: 0;
+    margin: 0;
 }
 
 .li{
-    
-    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
     margin-bottom: 8px;
+    background-color: white;
+    color: var(--black);
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.task-text{
+   flex: 1;
+}
+
+.edit-input {
+    flex: 1;
+    display: none;
+    border: none;
+    background-color: white;
+    color: var(--black);
+    margin-left: 8px;
+    padding: 4px;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+.edit-input:focus {
+    outline: none;
 }
 
 /* Icons */
 
 .fa-circle-plus{
     color: var(--black);
-    margin-left: 9px;
-    margin-right: 9px;
+    margin-right: 8px;
     font-size: 150%;
     cursor: pointer;
 }
+
 .fa-circle{
     margin-right: 8px;
     cursor: pointer;
 }
 
+.fa-check-circle{
+    margin-right: 9px;
+}
+
+
 .fa-trash{
     margin-left: 8px;
     cursor:pointer;
 }
+
+.fa-edit {
+    margin-left: 8px;
+    cursor: pointer;
+}
+
 
 i:hover{
     color:rgb(60, 60, 203);
@@ -107,6 +154,4 @@ button:hover{
     text-decoration: line-through;
 }
 
-.fa-check-circle{
-    margin-right: 8px;
-}
+
