@@ -6,7 +6,8 @@ Contiene :
 
 - Fecha y hora actual en Argentina
 - Agregar tareas
-- Tachar tareas
+- Completar tareas
 - Eliminar tarea correspondiente
+- Eliminar todas las tareas
 - Guardar en el LocalStorage
  
