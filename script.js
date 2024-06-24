@@ -60,7 +60,7 @@ const addTask = (task,count,circle,trash) =>{
     let line = circle ? lineThrough : ""
 
     const element = `<li class="li">
-                        <i class="far ${state}" data="sucess" count="${count}"></i>
+                        <i class="far ${state}" data="tick" count="${count}"></i>
                         <span class="task-text ${line}">${task}</span>
                         <input type="text" class="edit-input" hidden">
                         <i class="fa-solid fa-edit" data="edit" count="${count}"></i>
@@ -162,7 +162,7 @@ ul.addEventListener("click",(e)=>{
     const element = e.target
     const value = element.attributes.data.value
  
-    if(value === "sucess") taskDone(element)
+    if(value === "tick") taskDone(element)
     if(value === "delete") taskDelete(element)
     if(value === "edit") taskEdit(element)
         
