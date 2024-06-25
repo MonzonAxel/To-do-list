@@ -60,7 +60,7 @@ const addTask = (task,count,circle,trash) =>{
     let line = circle ? lineThrough : ""
 
     const element = `<li class="li">
-                        <i class="far ${state}" data="tick" count="${count}"></i>
+                        <i class="far ${state}" data="untick" count="${count}"></i>
                         <span class="task-text ${line}">${task}</span>
                         <input type="text" class="edit-input" hidden">
                         <i class="fa-solid fa-edit" data="edit" count="${count}"></i>
@@ -150,7 +150,20 @@ const taskEdit = (element) => {
         
 }
 
-// Disparador de tareas
+// Detecta los iconos y su estado data
+
+const detectState = (e) => {
+    const element = e.target
+    const value = element.attributes.data.value
+ 
+    if(value === "untick") taskDone(element)
+    if(value === "delete") taskDelete(element)
+    if(value === "edit") taskEdit(element)
+        
+    localStorage.setItem("Array",JSON.stringify(LIST))
+}
+
+// Disparador de eventos
 
 add.addEventListener("click", setTask);
 
@@ -158,16 +171,7 @@ input.addEventListener("keydown", (e) => {
     if (e.key === 'Enter') setTask()
 })
 
-ul.addEventListener("click",(e)=>{
-    const element = e.target
-    const value = element.attributes.data.value
- 
-    if(value === "tick") taskDone(element)
-    if(value === "delete") taskDelete(element)
-    if(value === "edit") taskEdit(element)
-        
-    localStorage.setItem("Array",JSON.stringify(LIST))
-})
+ul.addEventListener("click",detectState)
 
 input.addEventListener("input", () => charactersRestriction(input))
 
